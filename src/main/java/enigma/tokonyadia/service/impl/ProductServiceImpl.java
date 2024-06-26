@@ -16,12 +16,12 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public List<Product> getAll() {
-        return List.of();
+        return productRepo.findAll();
     }
 
     @Override
     public Product getOne(Integer id) {
-        return null;
+        return productRepo.findById(id).orElse(null);
     }
 
     @Override

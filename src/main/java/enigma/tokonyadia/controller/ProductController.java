@@ -22,9 +22,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/product")
-    public List<ProductProjection> getAllCustom() {
-        return productRepo.findAllProjectedBy();
+    @GetMapping
+    public List<Product> getAllCustom() {
+        return productService.getAll();
     }
 
     @PostMapping
