@@ -1,0 +1,41 @@
+Todo:
+    buat CRUD untuk model Product
+
+Product:
+    - id int
+    - name String
+    - price int
+
+Flow:
+    - Model
+    - Repository
+    - Service + ServiceImpl
+    - Controller
+
+// gitlab -> challenge/crud-product
+
+
+
+// Flow Specification -> filter getAll
+1. update bagian repo -> query method -> specification executor
+2. update service interface -> untuk menerima parameter request filter
+dari DTO
+3. update implementation biar ga merah
+4. kita bikin searchDTO? -> Data Transfer Object ->
+// alfin ->
+contohnya saat bikin customer:
+id -> auto increment
+name.
+~~~~~ password, email, birthdate, title dll
+
+DTO RegisterCustomerReq -> Customer
+name,
+email,
+password
+
+DTO SearchCustomerReq -> Customer
+name
+
+5. dalem implementation kita specify specification methodnya.
+
+6. jangan lupa update controller
