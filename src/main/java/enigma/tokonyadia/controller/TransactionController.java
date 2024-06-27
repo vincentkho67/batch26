@@ -3,6 +3,7 @@ package enigma.tokonyadia.controller;
 import enigma.tokonyadia.model.Transaction;
 import enigma.tokonyadia.service.TransactionDetailService;
 import enigma.tokonyadia.service.TransactionService;
+import enigma.tokonyadia.utils.dto.TransactionRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +14,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;
-    private final TransactionDetailService transactionDetailService;
 
     @PostMapping
-    public Transaction create(@RequestBody Transaction request) {
+    public Transaction create(@RequestBody TransactionRequestDTO request) {
         return transactionService.create(request);
     }
 
