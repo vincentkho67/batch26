@@ -39,3 +39,25 @@ name
 5. dalem implementation kita specify specification methodnya.
 
 6. jangan lupa update controller
+
+==========================================================
+1. Model
+2. Repo
+3. Kontrak Service / Service Interface
+4. Service Implementation
+5. Controller -> udah bisa di hit postman
+
+Fundamental Java + OOP
+->
+
+-> hackerrank -> javascript
+fizzbuzz
+cari index
+reverse string
+palindrome
+
+-> manipulasi array, looping, object, if else
+-> project based -> javascript
+-> sql
+-> php
+-> logic
