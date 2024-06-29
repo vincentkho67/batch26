@@ -1,5 +1,6 @@
 package enigma.tokonyadia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;

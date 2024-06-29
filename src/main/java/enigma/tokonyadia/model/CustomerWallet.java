@@ -1,5 +1,6 @@
 package enigma.tokonyadia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ public class CustomerWallet {
     private Integer id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "wallet_provider_id")
     private WalletProvider walletProvider;
 

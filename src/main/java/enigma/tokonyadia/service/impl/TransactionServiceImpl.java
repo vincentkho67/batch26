@@ -7,9 +7,13 @@ import enigma.tokonyadia.service.*;
 import enigma.tokonyadia.utils.dto.TransactionRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
@@ -52,7 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
         // potong saldo customer
 
         // 3 create new transaction
-        if (balance >= totalPrice) {
+        if (balance >= totalPrice && checkValidWallet(customer, cw)) {
             Transaction newTransaction = new Transaction();
             newTransaction.setCustomer(customer);
             Transaction createdTrans = transactionRepository.save(newTransaction);
@@ -72,6 +76,15 @@ public class TransactionServiceImpl implements TransactionService {
 
             return createdTrans;
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
-}
+
+    private boolean checkValidWallet(
+            Customer customer,
+            CustomerWallet cw
+            ) {
+        return Objects.equals(cw.getCustomer().getId(), customer.getId());
+    }
+
+    }
+
