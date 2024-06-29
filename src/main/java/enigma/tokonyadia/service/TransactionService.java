@@ -8,5 +8,5 @@ import java.util.List;
 public interface TransactionService {
     List<Transaction> getAll();
     Transaction getOne(Integer id);
-    Transaction create(TransactionRequestDTO request);
+    Transaction buy(TransactionRequestDTO request);
 }

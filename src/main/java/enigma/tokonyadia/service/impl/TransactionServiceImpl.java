@@ -1,15 +1,9 @@
 package enigma.tokonyadia.service.impl;
 
-import enigma.tokonyadia.model.Customer;
-import enigma.tokonyadia.model.Product;
-import enigma.tokonyadia.model.Transaction;
-import enigma.tokonyadia.model.TransactionDetail;
+import enigma.tokonyadia.model.*;
 import enigma.tokonyadia.repository.CustomerRepository;
 import enigma.tokonyadia.repository.TransactionRepository;
-import enigma.tokonyadia.service.CustomerService;
-import enigma.tokonyadia.service.ProductService;
-import enigma.tokonyadia.service.TransactionDetailService;
-import enigma.tokonyadia.service.TransactionService;
+import enigma.tokonyadia.service.*;
 import enigma.tokonyadia.utils.dto.TransactionRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +17,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final CustomerService customerService;
     private final ProductService productService;
     private final TransactionDetailService tDetailService;
+    private final CustomerWalletService customerWalletService;
+    private final WalletProviderService walletService;
 //    public TransactionServiceImpl(TransactionRepository repo) {
 //        this.repo = repo;
 //    }
@@ -39,26 +35,42 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction create(TransactionRequestDTO request) {
+    public Transaction buy(TransactionRequestDTO request) {
         // Flow 1 -> get product by id from request.getProduct_id
         // Product product = productService.getById(productId);
         Product product = productService.getOne(request.getProduct_id());
         // 2 -> get Customer by id from request.getCustomerId
         // Customer customer = customerService.getById(customerId);
         Customer customer = customerService.getOne(request.getCustomer_id());
-        // 3 create new transaction
-        Transaction newTransaction = new Transaction();
-        newTransaction.setCustomer(customer);
-        Transaction createdTrans = transactionRepository.save(newTransaction);
-        // 4 create transaction_detail because we already have transaction
-        // TransactionDetail tDetail = transactionDetailService.create(customer, product);
-        TransactionDetail transDetail = new TransactionDetail();
-        transDetail.setTransaction(createdTrans);
-        transDetail.setPrice(product.getPrice());
-        transDetail.setProduct(product);
-        transDetail.setQuantity(request.getQuantity());
-        tDetailService.create(transDetail);
 
-        return createdTrans;
+        // total Price
+        Integer totalPrice = product.getPrice() * request.getQuantity();
+
+//        WalletProvider wallet = walletService.getOne(request.getWallet_provider_id());
+        CustomerWallet cw = customerWalletService.getOne(request.getCustomer_wallet_id());
+        Integer balance = cw.getBalance();
+        // potong saldo customer
+
+        // 3 create new transaction
+        if (balance >= totalPrice) {
+            Transaction newTransaction = new Transaction();
+            newTransaction.setCustomer(customer);
+            Transaction createdTrans = transactionRepository.save(newTransaction);
+
+            // 4 create transaction_detail because we already have transaction
+            // TransactionDetail tDetail = transactionDetailService.create(customer, product);
+            TransactionDetail transDetail = new TransactionDetail();
+            transDetail.setTransaction(createdTrans);
+            transDetail.setPrice(product.getPrice());
+            transDetail.setProduct(product);
+            transDetail.setQuantity(request.getQuantity());
+            tDetailService.create(transDetail);
+
+            cw.setBalance(balance - totalPrice);
+            customerWalletService.update(cw);
+
+            return createdTrans;
+        }
+        return null;
     }
 }

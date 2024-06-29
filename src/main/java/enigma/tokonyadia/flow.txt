@@ -50,6 +50,11 @@ name
 Fundamental Java + OOP
 ->
 
+===================================
+=> create Top Up feature, if done
+-> make a logic where a customer buy a product it would cut the balance on wallet
+and if its not sufficient, return error message;
+
 -> hackerrank -> javascript
 fizzbuzz
 cari index

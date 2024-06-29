@@ -17,7 +17,7 @@ public class TransactionController {
 
     @PostMapping
     public Transaction create(@RequestBody TransactionRequestDTO request) {
-        return transactionService.create(request);
+        return transactionService.buy(request);
     }
 
     @GetMapping

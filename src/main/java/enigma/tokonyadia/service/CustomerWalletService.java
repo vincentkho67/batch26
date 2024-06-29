@@ -9,4 +9,5 @@ public interface CustomerWalletService {
     CustomerWallet topUp(TopUpRequestDTO request);
     List<CustomerWallet> getAll();
     CustomerWallet getOne(Integer id);
+    CustomerWallet update(CustomerWallet request);
 }
