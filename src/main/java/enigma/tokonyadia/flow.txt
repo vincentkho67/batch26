@@ -66,3 +66,8 @@ palindrome
 -> sql
 -> php
 -> logic
+
+//
+1. Res.renderJson diaplikasikan di setiap controller
+2. Specification dipasang di getAll() -> WalletProvider, Customer, Product
+3. orElse(null) dibagian findById -> throw new ResponseException
