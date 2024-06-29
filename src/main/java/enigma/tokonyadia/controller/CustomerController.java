@@ -5,7 +5,11 @@ import enigma.tokonyadia.repository.CustomerRepository;
 import enigma.tokonyadia.service.CustomerService;
 import enigma.tokonyadia.utils.CustomerProjection;
 import enigma.tokonyadia.utils.SearchCustomerRequest;
+import enigma.tokonyadia.utils.dto.Res;
+import enigma.tokonyadia.utils.dto.WebResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -29,14 +33,19 @@ public class CustomerController {
     }
     // @GetMapping -> repository.findAll
     @GetMapping
-    public List<Customer> getAll(
+    public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String birthPlace
             ) {
         SearchCustomerRequest req = new SearchCustomerRequest();
         req.setName(name);
         req.setBirthPlace(birthPlace);
-        return customerService.getAll(req);
+
+        return Res.renderJson(
+                customerService.getAll(req),
+                HttpStatus.OK,
+                "Successfully get customers"
+                );
     }
 
     @GetMapping("/custom")
