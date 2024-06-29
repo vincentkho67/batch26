@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "wallet_providers")
 @NoArgsConstructor
@@ -20,4 +22,7 @@ public class WalletProvider {
 
 //    @OneToMany
 //    @JoinColumn(name = "customer_id")
+    @OneToMany
+    @JoinColumn(name = "wallet_provider_id")
+    List<CustomerWallet> customerWallets;
 }

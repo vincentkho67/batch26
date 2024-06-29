@@ -44,8 +44,9 @@ public class CustomerWalletServiceImpl implements CustomerWalletService {
         return repo.findById(id).orElse(null);
     }
 
-    public CustomerWallet update(CustomerWallet request) {
-        CustomerWallet updated = new CustomerWallet();
+    public CustomerWallet update(Integer id,CustomerWallet request) {
+        CustomerWallet updated = this.getOne(id);
+        System.out.println("INIIIIII CW ID :" + request.getId());
         updated.setBalance(request.getBalance());
         return repo.save(updated);
     }

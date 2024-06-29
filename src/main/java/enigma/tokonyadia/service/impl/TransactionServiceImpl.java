@@ -67,7 +67,8 @@ public class TransactionServiceImpl implements TransactionService {
             tDetailService.create(transDetail);
 
             cw.setBalance(balance - totalPrice);
-            customerWalletService.update(cw);
+
+            customerWalletService.update(cw.getId(),cw);
 
             return createdTrans;
         }
